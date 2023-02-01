@@ -1,5 +1,6 @@
 package com.codeclan.example.WhiskyTracker;
 
+import com.codeclan.example.WhiskyTracker.models.Distillery;
 import com.codeclan.example.WhiskyTracker.models.Whisky;
 import com.codeclan.example.WhiskyTracker.repositories.DistilleryRepository;
 import com.codeclan.example.WhiskyTracker.repositories.WhiskyRepository;
@@ -13,6 +14,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringRunner.class)
 @ActiveProfiles("test") //Indicates it's a test profile so will not run DataLoader
@@ -35,6 +37,18 @@ public class WhiskyTrackerApplicationTests {
 //		assertEquals(1, whiskies.size());
 		assertEquals(15, whiskies.get(0).getAge());
 		assertEquals("Glendronach", whiskies.get(0).getDistillery().getName());
+	}
+
+	@Test
+	public void canFindWhiskiesByDistilleryRegion(){
+		List<Whisky> regionalWhiskies = whiskyRepository.findWhiskiesByDistilleryRegion("Speyside");
+		assertEquals("Speyside",regionalWhiskies.get(0).getDistillery().getRegion());
+	}
+
+	@Test
+	public void canFindDistilleriesByWhiskiesAgeOver12(){
+		List<Distillery> found = distilleryRepository.findByWhiskiesAgeGreaterThan(12);
+		assertTrue(found.size()>0);
 	}
 
 }

@@ -38,4 +38,13 @@ public class WhiskyController {
         return new ResponseEntity<>(whiskyRepository.findWhiskyByAgeAndDistilleryName(age, name), HttpStatus.OK);
     }
 
+    @GetMapping(value = "/whiskies/location")
+    public ResponseEntity<List<Whisky>> getWhiskiesByRegion(
+            @RequestParam(name = "region", required = true) String region
+    ){
+        return new ResponseEntity<>(whiskyRepository.findWhiskiesByDistilleryRegion(region), HttpStatus.OK);
+    }
+
+
+
 }
